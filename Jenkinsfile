@@ -25,14 +25,14 @@ pipeline {
         stage('Build Image') {
             steps {
                 echo 'Building Docker images...'
-                sh 'docker compose build'
+                sh 'sh docker compose -p team-task-note-list build'
             }
         }
 
         stage('Automated Deployment') {
             steps {
                 echo 'Deploying application...'
-                sh 'docker compose up -d'
+                sh 'docker compose -p team-task-note-list up -d'
             }
         }
 
@@ -41,7 +41,7 @@ pipeline {
                 echo 'Checking backend health...'
                 sh '''
                     for i in $(seq 1 15); do
-                        if docker compose exec -T backend python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=3)"; then
+                        if docker compose -p team-task-note-list exec -T backend python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=3)"; then
                             echo "Backend is healthy!"
                             exit 0
                         fi
