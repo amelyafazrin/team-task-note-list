@@ -1,0 +1,30 @@
+﻿services:
+  backend:
+    build: ./backend
+    container_name: team-task-backend
+    ports:
+      - "8081:5000"
+    volumes:
+      - team-task-data:/app/data
+    networks:
+      - app-net
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: team-task-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - app-net
+    restart: unless-stopped
+
+networks:
+  app-net:
+    driver: bridge
+
+volumes:
+  team-task-data:
+    driver: local

@@ -1,8 +1,9 @@
-pipeline {
+﻿pipeline {
     agent any
 
     environment {
         APP_NAME = 'team-task-note-list'
+        COMPOSE_FILE = 'docker-compose.jenkins.yml'
     }
 
     stages {
@@ -10,7 +11,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Source code berhasil di-checkout.'
-                checkout scm
             }
         }
 
@@ -25,14 +25,14 @@ pipeline {
         stage('Build Image') {
             steps {
                 echo 'Building Docker images...'
-                sh 'docker compose -p team-task-note-list build'
+                sh 'docker compose -p team-task-note-list -f docker-compose.jenkins.yml build'
             }
         }
 
         stage('Automated Deployment') {
             steps {
                 echo 'Deploying application...'
-                sh 'docker compose -p team-task-note-list up -d'
+                sh 'docker compose -p team-task-note-list -f docker-compose.jenkins.yml up -d'
             }
         }
 
@@ -41,7 +41,7 @@ pipeline {
                 echo 'Checking backend health...'
                 sh '''
                     for i in $(seq 1 15); do
-                        if docker compose -p team-task-note-list exec -T backend python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=3)"; then
+                        if docker compose -p team-task-note-list -f docker-compose.jenkins.yml exec -T backend python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=3)"; then
                             echo "Backend is healthy!"
                             exit 0
                         fi
