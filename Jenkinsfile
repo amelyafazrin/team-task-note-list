@@ -25,7 +25,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 echo 'Building Docker images...'
-                sh 'sh docker compose -p team-task-note-list build'
+                sh 'docker compose -p team-task-note-list build'
             }
         }
 
