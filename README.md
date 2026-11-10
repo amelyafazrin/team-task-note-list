@@ -362,9 +362,3 @@ Video demo kelompok berdurasi **5--8 menit** dan memperlihatkan:
 6.  GitHub Webhook memicu Jenkins secara otomatis dan pipeline
     menyelesaikan seluruh stage hingga status **SUCCESS**.
 
-**Tautan video demo:** *(isi setelah video diunggah)*
-
-------------------------------------------------------------------------
-
-**Catatan:** Pastikan seluruh anggota kelompok memeriksa isi README,
-konfigurasi, dan hasil demo sebelum pengumpulan melalui LMS.
